@@ -7,10 +7,10 @@
         <h1>What have you done?</h1>
         <p>
             <form method="get" action="/send">
-                <label for="timeIn">Time</label>
-                <input type="datetime-local" name="timeIn"></input>
+                <label for="timeIn">Time (hh:mm)</label>
+                <input type="text" name="timeIn" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9])"></input>
                 <label for="dateIn">Date (yyyy-mm-dd)</label>
-                <input type="date" name="dateIn" id="dateIn"></input>
+                <input type="date" name="dateIn" id="dateIn" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"></input>
                 <label for="activityIn">Activity</label>
                 <input type="text" name="activityIn"></input>
                 <input type="submit" id="submitAct"></input>
