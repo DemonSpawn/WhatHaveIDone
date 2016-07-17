@@ -7,7 +7,7 @@ app.get('/send', function (req, res) {
     var activity = req.query['activityIn'];
     var date = new Date();
     console.log(activity);
-    fs.appendFile('../activity.txt',date.getTime() + ' : ' + activity + '\n',  function(err) {
+    fs.appendFile('activity.txt',date.getTime() + ' : ' + activity + '\n',  function(err) {
    if (err) {
        return console.error(err);
    }});
