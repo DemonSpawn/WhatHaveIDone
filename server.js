@@ -2,7 +2,7 @@ var optimist = require('optimist')
 		.usage('Usage: $0 -o <output file>')
 		.options('o', {
 			alias : 'output',
-			default : 'activity.txt',
+			default : 'activity.csv',
 			describe : 'path to the output log file'
 		})
 		.string('o')
@@ -36,7 +36,7 @@ app.get('/send', function (req, res) {
     var activity = req.query['activityIn'];
     var date = new Date();
     console.log(date.getTime() + ': ' + activity);
-    fs.appendFile(outputPath,date.getTime() + ' : ' + activity + '\n',  function(err) {
+    fs.appendFile(outputPath,date.getTime() + ',"' + activity + '"\n',  function(err) {
     if (err) {
        return console.error(err);
     }});
