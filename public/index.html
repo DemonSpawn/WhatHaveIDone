@@ -7,10 +7,17 @@
         <h1>What have you done?</h1>
         <p>
             <form method="get" action="/send">
+                <label for="timeIn">Time</label>
+                <input type="datetime-local" name="timeIn"></input>
+                <label for="dateIn">Date (yyyy-mm-dd)</label>
+                <input type="date" name="dateIn" id="dateIn"></input>
                 <label for="activityIn">Activity</label>
                 <input type="text" name="activityIn"></input>
                 <input type="submit" id="submitAct"></input>
             </form>
         </p>
+
+        <script src="js/core.js"></script>
+
     </body>
 </html>

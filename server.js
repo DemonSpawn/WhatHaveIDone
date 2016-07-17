@@ -28,15 +28,27 @@ fs.access(outputPath, fs.W_OK, function(err) {
 
 var express = require('express');
 var app = express();
+
+//public serves as static file dir
+app.use(express.static('public'));
 app.set('view engine','jade');
 
 console.log('writing output to ' + outputPath);
 
 app.get('/send', function (req, res) {
     var activity = req.query['activityIn'];
-    var date = new Date();
-    console.log(date.getTime() + ': ' + activity);
-    fs.appendFile(outputPath,date.getTime() + ' : ' + activity + '\n',  function(err) {
+    var time = req.query['timeIn'];
+    var dateReq = req.query['dateIn'];
+    var dateString = '';
+   
+    if (time == '') {
+        var date = new Date();
+        time = date.toLocaleTimeString();
+    }
+    
+    dateString = dateReq + ' ' + time;
+    
+    fs.appendFile(outputPath, dateString + ' : ' + activity + '\n',  function(err) {
     if (err) {
        return console.error(err);
     }});
