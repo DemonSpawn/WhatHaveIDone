@@ -1,0 +1,26 @@
+{
+  "name": "whathaveidone",
+  "version": "0.0.1",
+  "description": "check what you have done for things",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DemonSpawn/WhatHaveIDone.git"
+  },
+  "keywords": [
+    "time-managment"
+  ],
+  "author": "Alexander Seidel",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/DemonSpawn/WhatHaveIDone/issues"
+  },
+  "homepage": "https://github.com/DemonSpawn/WhatHaveIDone#readme",
+"dependencies" : {
+    "express" : "^4.0"
+}
+}
