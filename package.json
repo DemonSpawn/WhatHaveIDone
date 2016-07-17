@@ -1,6 +1,6 @@
 {
   "name": "whathaveidone",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "check what you have done for things",
   "main": "server.js",
   "scripts": {
@@ -15,12 +15,14 @@
     "time-managment"
   ],
   "author": "Alexander Seidel",
+  "contributors": ["Paul G."],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/DemonSpawn/WhatHaveIDone/issues"
   },
   "homepage": "https://github.com/DemonSpawn/WhatHaveIDone#readme",
 "dependencies" : {
-    "express" : "^4.0"
+    "express" : "^4.0",
+    "optimist": "^0.6.1" 
 }
 }
