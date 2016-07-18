@@ -38,15 +38,20 @@ console.log('writing output to ' + outputPath);
 app.get('/send', function (req, res) {
     var activity = req.query['activityIn'];
     var time = req.query['timeIn'];
-    var dateReq = req.query['dateIn'];
+    var date = req.query['dateIn'];
     var dateString = '';
    
-    if (time == '') {
-        var date = new Date();
-        time = date.toLocaleTimeString();
+    if (time === '') {
+        var tmp = new Date();
+        time = pad(tmp.getHours()) + ':' + pad(tmp.getMinutes());
     }
+
+	if (date === '') {
+		var tmp = new Date();
+		date = tmp.getFullYear() + '-' + pad(tmp.getMonth()+1) + '-' + pad(tmp.getDate());
+	}
     
-    dateString = dateReq + ' ' + time;
+    dateString = date + ' ' + time;
     
     fs.appendFile(outputPath, dateString + ' : ' + activity + '\n',  function(err) {
     if (err) {
@@ -62,3 +67,7 @@ app.get('/', function(req,res) {
 app.listen(8081, function () {
   console.log('Day Tracker app listening on port 8081!');
 });
+
+function pad(number) {
+	return (number < 10) ? '0' + number : number;
+}
