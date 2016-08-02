@@ -6,6 +6,11 @@ var optimist = require('optimist')
 			describe : 'path to the output log file'
 		})
 		.string('o')
+		.options('p', {
+			alias : 'port',
+			default : '8081',
+			describe : 'server port'
+		})
 		.options('h', {
 			describe : 'Display this message',
 			alias : 'help'
@@ -25,6 +30,12 @@ fs.access(outputPath, fs.W_OK, function(err) {
 		process.exit(1);
 	}
 });
+
+var port = argv.port;
+if (port > 65535 || port < 0) {
+	console.error('not a valid port');
+	process.exit(2);
+}
 
 var express = require('express');
 var app = express();
@@ -64,8 +75,8 @@ app.get('/', function(req,res) {
    res.sendFile('public/index.html', {root: __dirname});
 });
 
-app.listen(8081, function () {
-  console.log('Day Tracker app listening on port 8081!');
+app.listen(port, function () {
+  console.log('Day Tracker app listening on port ' + port  + '!');
 });
 
 function pad(number) {
