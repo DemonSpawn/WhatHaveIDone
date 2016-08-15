@@ -52,12 +52,12 @@ app.get('/send', function (req, res) {
     var date = req.query['dateIn'];
     var dateString = '';
    
-    if (time === '') {
+    if (time === '' || typeof time == 'undefined') {
         var tmp = new Date();
         time = pad(tmp.getHours()) + ':' + pad(tmp.getMinutes());
     }
 
-	if (date === '') {
+	if (date === '' || typeof date == 'undefined') {
 		var tmp = new Date();
 		date = tmp.getFullYear() + '-' + pad(tmp.getMonth()+1) + '-' + pad(tmp.getDate());
 	}
