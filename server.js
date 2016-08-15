@@ -75,6 +75,16 @@ app.get('/', function(req,res) {
    res.sendFile('public/index.html', {root: __dirname});
 });
 
+app.get('/last', function(req, res) {
+	fs.readFile(outputPath, function(err, data) {
+		if (!err)  {
+			var lines = data.toString().trim().split('\n');
+			var lastLines = lines.slice(-3);			
+			res.send(lastLines);
+		}
+	});
+});
+
 app.listen(port, function () {
   console.log('Day Tracker app listening on port ' + port  + '!');
 });
