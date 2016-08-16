@@ -79,7 +79,7 @@ app.get('/last', function(req, res) {
 	fs.readFile(outputPath, function(err, data) {
 		if (!err)  {
 			var lines = data.toString().trim().split('\n');
-			var lastLines = lines.slice(-3);			
+			var lastLines = lines.slice(-3).reverse();			
 			res.send(lastLines);
 		}
 	});
