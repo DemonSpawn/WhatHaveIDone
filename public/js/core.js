@@ -56,6 +56,7 @@ $.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
 			         document.getElementById('activityIn').value = "";
 					 // TODO reload latest activities
 	            };
+				$('#activityIn').blur();
 				Materialize.toast(data, 2000);
 		    });
         return false;
