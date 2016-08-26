@@ -23,17 +23,17 @@ $.getJSON( "last", function( data ) {
 });
 
 // get the most frequent activities from the server and display them
-$.getJSON( "frequent", function( data ) {
-  var elementsPR = 3;
+var rows = 3;
+var elementsPR = 3;	// elements per row, fixed for now because of column style s4
+$.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
   var i;
-  // TODO make more dynamic
-  for (i = 0; i < elementsPR-1; i++) {
+  for (i = 0; i < rows; i++) {
     var row = document.createElement("div");
-    row.setAttribute('class', 'Row');
+    row.setAttribute('class', 'valign-wrapper');
 	var slicedData = data.slice(elementsPR*i, elementsPR*(i+1));
     for (var a in slicedData) {
       var div = document.createElement("div");
-      div.setAttribute('class', 'Column');
+      div.setAttribute('class', 'col s4 l2 valign green darken-3 white-text card center');
 	  div.setAttribute('onClick', "$ ('#activityIn').val('" + slicedData[a] + "'); $('#activityForm').submit(); ");
       div.innerHTML = slicedData[a];
       row.appendChild(div);
@@ -54,9 +54,9 @@ $.getJSON( "frequent", function( data ) {
 	        function(data){
 		        if(data == "success"){ //server response
 			         document.getElementById('activityIn').value = "";
-					 $( "#spanSuccess" ).text( "success" ).show().fadeOut( 2000 );
 					 // TODO reload latest activities
 	            };
+				Materialize.toast(data, 2000);
 		    });
         return false;
     });
