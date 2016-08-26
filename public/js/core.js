@@ -29,16 +29,16 @@ $.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
   var i;
   for (i = 0; i < rows; i++) {
     var row = document.createElement("div");
-    row.setAttribute('class', 'valign-wrapper');
+    //row.setAttribute('class', 'valign-wrapper');
 	var slicedData = data.slice(elementsPR*i, elementsPR*(i+1));
     for (var a in slicedData) {
       var div = document.createElement("div");
-      div.setAttribute('class', 'col s4 l2 valign green darken-3 white-text card center');
+      div.setAttribute('class', 'center col s4 m3 l2 green darken-3 white-text card');
 	  div.setAttribute('onClick', "$ ('#activityIn').val('" + slicedData[a] + "'); $('#activityForm').submit(); ");
       div.innerHTML = slicedData[a];
       row.appendChild(div);
     }
-    document.getElementById("frequent_tasks").appendChild(row);
+    document.getElementById('frequent_tasks').appendChild(row);
   }
 });
 

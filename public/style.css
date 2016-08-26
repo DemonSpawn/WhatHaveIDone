@@ -7,10 +7,11 @@
 	list-style: none;
 }
 
-
-.card
-{
+.card {
 	height: 3em;
+    margin: 3px;
+    display: flex; 
+    align-items: center;
 }
 
 #spanSuccess {
@@ -19,4 +20,9 @@
 	text-align: center;
 	background-color: green;
 	text-color: white;
+}
+
+.logo {
+    margin: auto;
+    text-align: center;
 }
