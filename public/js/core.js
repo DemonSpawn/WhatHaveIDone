@@ -10,17 +10,22 @@ setInterval(updateClock, 60000);
 updateClock();		// but do it also right now
 
 // get the last 3 activities from the server and display them
-$.getJSON( "last", function( data ) {
-  var items = [];
-  $.each( data, function( key, val ) {
-    items.push( "<li id='" + key + "'>" + val + "</li>" );
+function updateLatest() {
+  $.getJSON( "last", function( data ) {
+    var items = [];
+    $.each( data, function( key, val ) {
+      items.push( "<li id='" + key + "'>" + val + "</li>" );
+    });
+    
+    $( "#last_tasks" ).empty();
+    $( "<ul/>", {
+      "class": "bulletless-list",
+      html: items.join( "" )
+    }).appendTo( document.getElementById("last_tasks") );
   });
- 
-  $( "<ul/>", {
-    "class": "bulletless-list",
-    html: items.join( "" )
-  }).appendTo( document.getElementById("last_tasks") );
-});
+}
+
+updateLatest();
 
 // get the most frequent activities from the server and display them
 var rows = 3;
@@ -53,8 +58,8 @@ $.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
         $.get('send', submit, 
 	        function(data){
 		        if(data == "success"){ //server response
-			         document.getElementById('activityIn').value = "";
-					 // TODO reload latest activities
+			         $('#activityIn').val('');
+					 updateLatest();
 	            };
 				$('#activityIn').blur();
 				Materialize.toast(data, 2000);
