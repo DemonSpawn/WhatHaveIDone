@@ -68,7 +68,7 @@ app.get('/send', function (req, res) {
     if (err) {
        return console.error(err);
     }});
-    res.sendFile('public/success.html', {root: __dirname});
+    res.send('success');
 });
 
 app.get('/', function(req,res) {

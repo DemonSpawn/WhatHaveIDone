@@ -1,17 +1,6 @@
-body {
-width: 100%;
-height: 100%;
-}
 
 .bulletless-list {
 	list-style: none;
 }
 
 
-
-h1 { font-size:2em;}
-
-	form  { display: table;      }
-	p     { display: table-row;  }
-	label { display: table-cell; }
-	input { display: table-cell; }

@@ -9,6 +9,7 @@ function updateClock() {
 setInterval(updateClock, 60000);
 updateClock();		// but do it also right now
 
+// get the last 3 activities from the server and display them
 $.getJSON( "last", function( data ) {
   var items = [];
   $.each( data, function( key, val ) {
@@ -18,5 +19,20 @@ $.getJSON( "last", function( data ) {
   $( "<ul/>", {
     "class": "bulletless-list",
     html: items.join( "" )
-  }).appendTo( "body" );
+  }).appendTo( document.getElementById("last_tasks") );
 });
+
+// override the submit button to clear the form when submitting was a success
+   $("#activityForm").submit(function() {
+        var submit = $(this).serialize();
+        $.get('send', submit, 
+
+        function(data){
+            if(data == "success"){ //server response
+                 document.getElementById('activityIn').value = "";
+				 // TODO reload latest activities
+            };
+        });
+        return false;
+    });
+
