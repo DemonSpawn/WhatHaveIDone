@@ -11,6 +11,11 @@ var optimist = require('optimist')
 			default : '8081',
 			describe : 'server port'
 		})
+		.options('f', {
+			alias : 'frequent',
+			default : 'frequent.txt',
+			describe : 'a list of activities done most frequently, every line a single one'
+		})
 		.options('h', {
 			describe : 'Display this message',
 			alias : 'help'
@@ -22,6 +27,7 @@ if (argv.help) {
 	process.exit(0);
 }
 var outputPath = argv.o;
+var frequentPath = argv.f;
 
 var fs = require('fs');
 fs.access(outputPath, fs.W_OK, function(err) {
@@ -79,8 +85,24 @@ app.get('/last', function(req, res) {
 	fs.readFile(outputPath, function(err, data) {
 		if (!err)  {
 			var lines = data.toString().trim().split('\n');
-			var lastLines = lines.slice(-3).reverse();			
+			var lastLines = lines.slice(-1).reverse();			
 			res.send(lastLines);
+		}
+	});
+});
+
+app.get('/frequent', function(req, res) {
+	var amount = parseInt(req.query['amount']);
+	if (isNaN(amount) || amount == 0) {
+		amount = 6;
+	}
+	fs.readFile(frequentPath, function(err, data) {
+		if (!err)  {
+			var lines = data.toString().trim().split('\n');
+			var lastActivities = lines.slice(0, amount);
+			res.send(lastActivities);
+		} else {
+			res.send([]);
 		}
 	});
 });

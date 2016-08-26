@@ -22,17 +22,42 @@ $.getJSON( "last", function( data ) {
   }).appendTo( document.getElementById("last_tasks") );
 });
 
+// get the most frequent activities from the server and display them
+$.getJSON( "frequent", function( data ) {
+  var elementsPR = 3;
+  var i;
+  // TODO make more dynamic
+  for (i = 0; i < elementsPR-1; i++) {
+    var row = document.createElement("div");
+    row.setAttribute('class', 'Row');
+	var slicedData = data.slice(elementsPR*i, elementsPR*(i+1));
+    for (var a in slicedData) {
+      var div = document.createElement("div");
+      div.setAttribute('class', 'Column');
+	  div.setAttribute('onClick', "$ ('#activityIn').val('" + slicedData[a] + "'); $('#activityForm').submit(); ");
+      div.innerHTML = slicedData[a];
+      row.appendChild(div);
+    }
+    document.getElementById("frequent_tasks").appendChild(row);
+  }
+});
+
 // override the submit button to clear the form when submitting was a success
-   $("#activityForm").submit(function() {
+   $("#activityForm").submit(function(event) {
+		if ( $ ("#activityIn").val() === "") {
+			// no activity given
+			event.preventDefault();
+			return false;
+		}
         var submit = $(this).serialize();
         $.get('send', submit, 
-
-        function(data){
-            if(data == "success"){ //server response
-                 document.getElementById('activityIn').value = "";
-				 // TODO reload latest activities
-            };
-        });
+	        function(data){
+		        if(data == "success"){ //server response
+			         document.getElementById('activityIn').value = "";
+					 $( "#spanSuccess" ).text( "success" ).show().fadeOut( 2000 );
+					 // TODO reload latest activities
+	            };
+		    });
         return false;
     });
 
