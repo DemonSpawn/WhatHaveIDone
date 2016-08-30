@@ -11,7 +11,7 @@ updateClock();		// but do it also right now
 
 // get the last 3 activities from the server and display them
 function updateLatest() {
-  $.getJSON( "last", function( data ) {
+  $.getJSON( "last?forceUpdate=" + Math.random(), function( data ) {
     var items = [];
     $.each( data, function( key, val ) {
       items.push( "<li id='" + key + "'>" + val + "</li>" );
@@ -62,7 +62,7 @@ $.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
 					 updateLatest();
 	            };
 				$('#activityIn').blur();
-				Materialize.toast(data, 2000);
+				Materialize.toast(data, 3000);
 		    });
         return false;
     });
