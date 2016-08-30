@@ -10,30 +10,35 @@ setInterval(updateClock, 60000);
 updateClock();		// but do it also right now
 
 // get the last 3 activities from the server and display them
-$.getJSON( "last", function( data ) {
-  var items = [];
-  $.each( data, function( key, val ) {
-    items.push( "<li id='" + key + "'>" + val + "</li>" );
+function updateLatest() {
+  $.getJSON( "last", function( data ) {
+    var items = [];
+    $.each( data, function( key, val ) {
+      items.push( "<li id='" + key + "'>" + val + "</li>" );
+    });
+    
+    $( "#last_tasks" ).empty();
+    $( "<ul/>", {
+      "class": "bulletless-list",
+      html: items.join( "" )
+    }).appendTo( document.getElementById("last_tasks") );
   });
- 
-  $( "<ul/>", {
-    "class": "bulletless-list",
-    html: items.join( "" )
-  }).appendTo( document.getElementById("last_tasks") );
-});
+}
+
+updateLatest();
 
 // get the most frequent activities from the server and display them
-$.getJSON( "frequent", function( data ) {
-  var elementsPR = 3;
+var rows = 3;
+var elementsPR = 3;	// elements per row, fixed for now because of column style s4
+$.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
   var i;
-  // TODO make more dynamic
-  for (i = 0; i < elementsPR-1; i++) {
+  for (i = 0; i < rows; i++) {
     var row = document.createElement("div");
-    row.setAttribute('class', 'Row');
+    row.setAttribute('class', 'valign-wrapper');
 	var slicedData = data.slice(elementsPR*i, elementsPR*(i+1));
     for (var a in slicedData) {
       var div = document.createElement("div");
-      div.setAttribute('class', 'Column');
+      div.setAttribute('class', 'col s4 l2 valign green darken-3 white-text card center');
 	  div.setAttribute('onClick', "$ ('#activityIn').val('" + slicedData[a] + "'); $('#activityForm').submit(); ");
       div.innerHTML = slicedData[a];
       row.appendChild(div);
@@ -53,10 +58,11 @@ $.getJSON( "frequent", function( data ) {
         $.get('send', submit, 
 	        function(data){
 		        if(data == "success"){ //server response
-			         document.getElementById('activityIn').value = "";
-					 $( "#spanSuccess" ).text( "success" ).show().fadeOut( 2000 );
-					 // TODO reload latest activities
+			         $('#activityIn').val('');
+					 updateLatest();
 	            };
+				$('#activityIn').blur();
+				Materialize.toast(data, 2000);
 		    });
         return false;
     });

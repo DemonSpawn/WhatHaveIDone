@@ -7,21 +7,10 @@
 	list-style: none;
 }
 
-.Row
+
+.card
 {
-    display: table;
-    height: 6em;
-    width: 100%; /*Optional*/
-    table-layout: fixed; /*Optional*/
-    border-spacing: 0.5em; /*Optional*/
-}
-.Column
-{
-    display: table-cell;
-    background-color: Highlight; /*Optional*/
-	text-color: HighlightText;
-    text-align: center;
-    vertical-align: middle;
+	height: 3em;
 }
 
 #spanSuccess {
