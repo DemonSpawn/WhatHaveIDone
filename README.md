@@ -16,7 +16,7 @@ Processing of this data is up to the user.
 run `node server.js` to start the server, expected output:  
 ```
 WhatHaveIDone server listening on port 8081!  
-writing activities into activity.txt
+initialized new activities file activity.txt
 ```
 now open your browser, connect to `localhost:8081` and start logging! To get your own activities on the quick access buttons just modifiy the `frequent.txt` file. One item in each line.
 
