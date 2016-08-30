@@ -1,5 +1,4 @@
 var optimist = require('optimist')
-		.usage('Usage: $0 -o <output file>')
 		.options('o', {
 			alias : 'output',
 			default : 'activity.txt',
@@ -14,7 +13,7 @@ var optimist = require('optimist')
 		.options('f', {
 			alias : 'frequent',
 			default : 'frequent.txt',
-			describe : 'a list of activities done most frequently, every line a single one'
+			describe : 'a list of activities done most frequently, every line a single one. This file will be read again for every request.'
 		})
 		.options('h', {
 			describe : 'Display this message',
@@ -30,10 +29,20 @@ var outputPath = argv.o;
 var frequentPath = argv.f;
 
 var fs = require('fs');
-fs.access(outputPath, fs.W_OK, function(err) {
+fs.access(outputPath, function(err) {
 	if (err) {
-		console.error('file ' + outputPath + ' not writable.');
-		process.exit(1);
+		var tmp = new Date();
+		fs.appendFile(outputPath, pad(tmp.getFullYear()) + '-' + pad(tmp.getMonth()+1) + '-' + pad(tmp.getDate()) + ' ' + 
+								  pad(tmp.getHours()) + ':' + pad(tmp.getMinutes()) + ' : start\n', function(err) {
+			if (err) {
+				console.error('file ' + outputPath + ' not writable.');
+				process.exit(1);
+			} else {
+				console.log('initialized new activities file ' + outputPath);
+			}
+		});
+	} else {
+		console.log('writing activities into ' + outputPath);
 	}
 });
 
@@ -49,8 +58,6 @@ var app = express();
 //public serves as static file dir
 app.use(express.static('public'));
 app.set('view engine','jade');
-
-console.log('writing output to ' + outputPath);
 
 app.get('/send', function (req, res) {
     var activity = req.query['activityIn'];
@@ -108,7 +115,7 @@ app.get('/frequent', function(req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Day Tracker app listening on port ' + port  + '!');
+  console.log('WhatHaveIDone server listening on port ' + port  + '!');
 });
 
 function pad(number) {
