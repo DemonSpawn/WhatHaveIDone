@@ -29,7 +29,7 @@ var outputPath = argv.o;
 var frequentPath = argv.f;
 
 var fs = require('fs');
-fs.access(outputPath, function(err) {
+fs.access(outputPath, fs.R_OK | fs.W_OK, function(err) {
 	if (err) {
 		var tmp = new Date();
 		fs.appendFile(outputPath, pad(tmp.getFullYear()) + '-' + pad(tmp.getMonth()+1) + '-' + pad(tmp.getDate()) + ' ' + 
@@ -78,10 +78,15 @@ app.get('/send', function (req, res) {
     dateString = date + ' ' + time;
     
     fs.appendFile(outputPath, dateString + ' : ' + activity + '\n',  function(err) {
-    if (err) {
-       return console.error(err);
-    }});
-    res.send('success');
+	    if (err) {
+			res.send('{ "success": false, "message": "error. check log." }');
+			return console.error(err);
+		} else {
+			var message = dateString + ' : ' + activity;
+		    res.send('{ "success": true,  "message": "' + message + '" }');
+			console.log('logged ' + message);
+		}
+	});
 });
 
 app.get('/', function(req,res) {

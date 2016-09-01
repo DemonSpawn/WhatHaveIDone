@@ -55,14 +55,14 @@ $.getJSON( "frequent?amount=" + (rows * elementsPR), function( data ) {
 			return false;
 		}
         var submit = $(this).serialize();
-        $.get('send', submit, 
+        $.getJSON('send', submit, 
 	        function(data){
-		        if(data == "success"){ //server response
+		        if(data.success){
 			         $('#activityIn').val('');
 					 updateLatest();
 	            };
 				$('#activityIn').blur();
-				Materialize.toast(data, 3000);
+				Materialize.toast(data.message, 3000);
 		    });
         return false;
     });
